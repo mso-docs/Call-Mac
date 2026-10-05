@@ -171,6 +171,8 @@ CALL_MAC_MODEL=gemma3:1b python -m streamlit run app.py
 
 ### Public browser demo
 
+[Try Call Mac in your browser](https://mso-docs.github.io/Call-Mac/).
+
 The standalone [`demo/`](demo/) site can be hosted on **GitHub Pages or Vercel**.
 Visitors can connect their own Ollama directly from the browser or try a labeled,
 fictional sample without installing anything. Conversations stay in the open tab;
