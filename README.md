@@ -14,6 +14,9 @@ it offers one step and waits to hear what happened.
 An open-weight Gemma model runs through Ollama on your computer or a configured server. The profile, attempts,
 and successful fixes stay in SQLite on the user's computer.
 
+Read the [DEV challenge writeup: Call Mac — Patient AI Tech Support for My Mom](https://dev.to/mackenzie-techdocs/call-mac-patient-ai-tech-support-for-my-mom-2ccm)
+for the story behind the project and why open-weight AI matters.
+
 ## The problem and who it's for
 
 A printer that says “offline” can interrupt someone's whole day. General chatbots
