@@ -1,0 +1,55 @@
+# Python environments and generated files
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+node_modules/
+.vercel/
+
+# Private configuration; keep the sanitized template public
+.env
+.env.*
+!.env.example
+.envrc
+.streamlit/secrets.toml
+.streamlit/secrets.toml.*
+.aws/
+credentials.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Profiles, conversations, database journals, and backups
+data/*
+!data/.gitkeep
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db.*
+*.sqlite.*
+*.sqlite3.*
+*.log
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

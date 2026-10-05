@@ -1,0 +1,254 @@
+<style>
+:root {
+  --mac-bg: #ffffff; --mac-surface: #f8fafc; --mac-text: #0f172a;
+  --mac-muted: #64748b; --mac-border: #dbe3ee; --mac-accent: #2563eb;
+}
+:root[data-mac-theme="dark"] {
+  color-scheme: dark;
+  --mac-bg: #10151f; --mac-surface: #192231; --mac-text: #e5edf8;
+  --mac-muted: #a5b4c8; --mac-border: #334155; --mac-accent: #93b4ff;
+}
+.stApp, [data-testid="stHeader"], [data-testid="stBottom"] > div {
+  background: var(--mac-bg); color: var(--mac-text);
+}
+[data-testid="stSidebar"], [data-testid="stChatMessage"] {
+  background: var(--mac-surface); color: var(--mac-text); border-color: var(--mac-border);
+}
+.mac-brand, .mac-example strong, [data-testid="stHeading"],
+[data-testid="stMarkdownContainer"], [data-testid="stWidgetLabel"] { color: var(--mac-text); }
+.mac-example { background: var(--mac-bg); border-color: var(--mac-border); }
+.mac-example p, [data-testid="stCaptionContainer"] { color: var(--mac-muted); }
+[data-testid="stExpander"], hr { border-color: var(--mac-border); }
+[data-testid="stChatInput"] { background: var(--mac-surface); border-color: var(--mac-border); }
+/* Reserve an opaque header for the controls, including while chat scrolls. */
+[data-testid="stHeader"] {
+  height: 120px; background: var(--mac-bg); z-index: 1000;
+  align-items: flex-start;
+}
+/* Keep Streamlit's own toolbar in its original row despite the taller header. */
+[data-testid="stToolbar"] {
+  position: fixed; top: 0; left: 0; right: 0; height: 56px;
+  display: flex; align-items: center;
+}
+/* Keep the native reopen button above the custom header on every screen size. */
+[data-testid="stExpandSidebarButton"] {
+  position: fixed; top: 8px; left: 16px; z-index: 1002;
+  width: 40px; height: 40px; color: var(--mac-text);
+  background: var(--mac-surface); border: 1px solid var(--mac-border);
+  border-radius: 8px;
+}
+[data-testid="stExpandSidebarButton"] > *,
+[data-testid="stSidebarCollapseButton"] button > * { display: none; }
+[data-testid="stExpandSidebarButton"]::before,
+[data-testid="stSidebarCollapseButton"] button::before {
+  content: ""; width: 18px; height: 14px;
+  color: var(--mac-text);
+  background: linear-gradient(currentColor, currentColor) top / 100% 2px no-repeat,
+              linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+              linear-gradient(currentColor, currentColor) bottom / 100% 2px no-repeat;
+}
+[data-testid="stSidebar"] { z-index: 1003; }
+/* The header overlays the sidebar's native close control; lift it above the header. */
+[data-testid="stSidebarCollapseButton"] {
+  position: relative; z-index: 1002; visibility: visible; opacity: 1;
+}
+[data-testid="stSidebarCollapseButton"] button {
+  position: fixed; top: 8px; left: 16px; z-index: 1002;
+  width: 40px; height: 40px; opacity: 1; visibility: visible;
+  color: var(--mac-text); background: var(--mac-surface);
+  border: 1px solid var(--mac-border); border-radius: 8px;
+}
+[data-testid="stSidebarCollapseButton"] button:focus-visible {
+  outline: 2px solid var(--mac-accent); outline-offset: 3px;
+}
+[data-testid="stExpandSidebarButton"]:focus-visible {
+  outline: 2px solid var(--mac-accent); outline-offset: 3px;
+}
+[data-testid="stMain"] .stMainBlockContainer { padding-top: 9rem; }
+.mac-theme-control, .st-key-app_navigation { z-index: 1001; }
+/* Toasts are outside the main app surface, so theme them explicitly. */
+[data-testid="stToast"] {
+  background: var(--mac-surface);
+  color: var(--mac-text);
+  border: 1px solid var(--mac-border);
+}
+[data-testid="stToast"] [data-testid="stMarkdownContainer"],
+[data-testid="stToast"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stToast"] button,
+[data-testid="stToast"] button svg {
+  color: var(--mac-text);
+}
+[data-testid="stToast"] button:focus-visible {
+  outline: 2px solid var(--mac-accent); outline-offset: 2px;
+}
+.mac-theme-control {
+  position: fixed; top: 64px; right: 24px; z-index: 1001;
+  display: flex; align-items: center; gap: 8px; color: var(--mac-muted);
+  width: 196px; height: 40px; box-sizing: border-box;
+  font: 14px/20px sans-serif;
+}
+.st-key-brand_home { margin-bottom: 2.5rem; }
+.st-key-brand_home button {
+  color: var(--mac-text); font-size: 17px; font-weight: 650;
+  padding: 4px 0; border: 0; background: transparent;
+}
+.st-key-brand_home button p { font: inherit; }
+.st-key-brand_home button [data-testid="stIconMaterial"] {
+  background: #2563eb; color: white; border-radius: 8px;
+  width: 28px; min-width: 28px; height: 28px; flex-shrink: 0; display: grid; place-items: center;
+}
+.st-key-brand_home button:focus-visible {
+  outline: 2px solid var(--mac-accent); outline-offset: 3px;
+}
+/* Native Streamlit navigation keeps the current conversation session intact. */
+.st-key-app_navigation {
+  position: fixed; top: 64px; right: 232px; z-index: 1001;
+  width: auto; max-width: fit-content; height: 40px;
+  display: flex; justify-content: center; margin: 0;
+}
+.st-key-app_navigation button {
+  color: var(--mac-accent); font: 14px/20px sans-serif;
+  height: 40px; min-height: 40px; box-sizing: border-box;
+  display: flex; align-items: center; padding: 0 10px;
+  margin: 0;
+}
+.st-key-app_navigation button p { font: inherit; margin: 0; }
+.st-key-app_navigation button:hover { text-decoration: underline; }
+.st-key-app_navigation button:focus-visible {
+  outline: 2px solid var(--mac-accent); outline-offset: 3px;
+}
+.mac-theme-control select {
+  background: var(--mac-surface); color: var(--mac-text);
+  border: 1px solid var(--mac-border); border-radius: 8px; padding: 7px 10px;
+  font: inherit; cursor: pointer; width: 90px; height: 40px;
+  min-height: 40px; box-sizing: border-box;
+}
+.mac-theme-control select:focus-visible { outline: 2px solid var(--mac-accent); outline-offset: 3px; }
+:root[data-mac-theme="dark"] [data-baseweb="select"] > div,
+:root[data-mac-theme="dark"] [data-baseweb="input"],
+:root[data-mac-theme="dark"] [data-baseweb="base-input"],
+:root[data-mac-theme="dark"] [data-baseweb="textarea"],
+:root[data-mac-theme="dark"] [data-baseweb="popover"],
+:root[data-mac-theme="dark"] [role="listbox"],
+:root[data-mac-theme="dark"] [role="option"],
+:root[data-mac-theme="dark"] textarea,
+:root[data-mac-theme="dark"] input {
+  background: var(--mac-surface); color: var(--mac-text); border-color: var(--mac-border);
+  caret-color: var(--mac-text);
+}
+:root[data-mac-theme="dark"] textarea::placeholder,
+:root[data-mac-theme="dark"] input::placeholder { color: var(--mac-muted); opacity: 1; }
+:root[data-mac-theme="dark"] button[kind="secondary"],
+:root[data-mac-theme="dark"] [data-testid="stExpander"] summary {
+  background: var(--mac-surface); color: var(--mac-text); border-color: var(--mac-border);
+}
+:root[data-mac-theme="dark"] button[kind="secondary"]:hover,
+:root[data-mac-theme="dark"] [role="option"]:hover { background: #263449; }
+:root[data-mac-theme="dark"] [data-testid="stCode"] { background: var(--mac-surface); color: var(--mac-text); }
+:root[data-mac-theme="dark"] [data-testid="stMarkdownContainer"] a { color: var(--mac-accent); }
+:root[data-mac-theme="dark"] [data-testid="stAlert"] [data-testid="stMarkdownContainer"] { color: inherit; }
+:root[data-mac-theme="dark"] [data-testid="stSidebarCollapseButton"] button,
+:root[data-mac-theme="dark"] [data-testid="stExpandSidebarButton"] button,
+:root[data-mac-theme="dark"] [data-testid="stToolbar"] button { color: var(--mac-text); }
+/* React Aria select controls in newer Streamlit releases. */
+:root[data-mac-theme="dark"] [data-testid="stSelectbox"] [role="group"],
+:root[data-mac-theme="dark"] [data-testid="stSelectbox"] button {
+  background: var(--mac-surface); color: var(--mac-text); border-color: var(--mac-border);
+}
+:root[data-mac-theme="dark"] [data-testid="stSidebar"] button[aria-label],
+:root[data-mac-theme="dark"] [data-testid="stSidebarCollapsedControl"] button,
+:root[data-mac-theme="dark"] [data-testid="stChatInputSubmitButton"] {
+  color: var(--mac-muted);
+}
+/* BaseWeb and Streamlit nest painted surfaces inside their control roots. */
+:root[data-mac-theme="dark"] [data-testid="stChatInput"] > div,
+:root[data-mac-theme="dark"] [data-testid="stChatInput"] [data-baseweb="textarea"],
+:root[data-mac-theme="dark"] [data-baseweb="select"] > div > div {
+  background: var(--mac-surface); color: var(--mac-text); border-color: var(--mac-border);
+}
+:root[data-mac-theme="dark"] [data-testid="stCaptionContainer"] p,
+:root[data-mac-theme="dark"] [data-testid="stMarkdownContainer"] [data-testid="stCaptionContainer"] {
+  color: var(--mac-muted) !important;
+}
+:root[data-mac-theme="dark"] [data-testid="stExpander"] > details { border-color: var(--mac-border); }
+:root[data-mac-theme="dark"] hr { border-color: var(--mac-border); }
+:root[data-mac-theme="dark"] [data-testid="stSidebarCollapsedControl"] button { color: var(--mac-text); }
+@media (max-width: 640px) {
+ .mac-theme-control { top: 66px; right: 16px; width: 90px; }
+ .st-key-app_navigation { top: 66px; right: 118px; }
+ .mac-theme-control label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+}
+</style>
+<div class="mac-theme-control">
+  <label for="mac-theme-choice">Appearance</label>
+  <select id="mac-theme-choice" aria-label="Appearance">
+    <option value="system">System</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</div>
+<script>
+(() => {
+  const labelSidebarButton = () => {
+    // Streamlit restores its sidebar preference from localStorage. On a new
+    // document, close it once; subsequent user toggles and reruns stay intact.
+    const sidebar = document.querySelector('[data-testid="stSidebar"]');
+    const close = document.querySelector('[data-testid="stSidebarCollapseButton"] button');
+    if (!window.callMacSidebarInitialized && sidebar) {
+      if (sidebar.getAttribute('aria-expanded') === 'false') {
+        window.callMacSidebarInitialized = true;
+      } else if (close) {
+        window.callMacSidebarInitialized = true;
+        close.click();
+      }
+    }
+    if (close && close.getAttribute('aria-label') !== 'Close sidebar') {
+      close.setAttribute('aria-label', 'Close sidebar');
+      close.setAttribute('title', 'Close sidebar');
+    }
+    const button = document.querySelector('[data-testid="stExpandSidebarButton"]');
+    if (button && button.getAttribute('aria-label') !== 'Open sidebar') {
+      button.setAttribute('aria-label', 'Open sidebar');
+      button.setAttribute('title', 'Open sidebar');
+    }
+  };
+  if (window.callMacSidebarObserver) window.callMacSidebarObserver.disconnect();
+  window.callMacSidebarObserver = new MutationObserver(labelSidebarButton);
+  window.callMacSidebarObserver.observe(document.body, { childList: true, subtree: true });
+  labelSidebarButton();
+  // Only the appearance choice is stored. No profile or conversation data.
+  const key = 'call-mac-appearance';
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const select = document.getElementById('mac-theme-choice');
+  if (!select) return;
+  if (window.callMacThemeCleanup) window.callMacThemeCleanup();
+  let choice = 'system';
+  try { choice = localStorage.getItem(key) || 'system'; } catch (_) {}
+  if (!['system', 'light', 'dark'].includes(choice)) choice = 'system';
+  select.value = choice;
+  const apply = () => {
+    document.documentElement.dataset.macTheme = choice === 'system'
+      ? (media.matches ? 'dark' : 'light') : choice;
+  };
+  const change = () => {
+    choice = select.value;
+    try { localStorage.setItem(key, choice); } catch (_) {}
+    apply();
+  };
+  const sync = event => {
+    if (event.key !== key && event.key !== null) return;
+    choice = ['system', 'light', 'dark'].includes(event.newValue) ? event.newValue : 'system';
+    select.value = choice;
+    apply();
+  };
+  select.addEventListener('change', change);
+  media.addEventListener('change', apply);
+  window.addEventListener('storage', sync);
+  window.callMacThemeCleanup = () => {
+    select.removeEventListener('change', change);
+    media.removeEventListener('change', apply);
+    window.removeEventListener('storage', sync);
+  };
+  apply();
+})();
+</script>

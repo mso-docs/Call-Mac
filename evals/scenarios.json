@@ -1,0 +1,79 @@
+[
+  {
+    "name": "unknown_phone",
+    "problem": "My phone has no sound",
+    "observation": "",
+    "previous_step": null,
+    "expected_moves": [
+      "ask"
+    ]
+  },
+  {
+    "name": "missing_menu",
+    "problem": "My iPhone has no sound",
+    "observation": "I can't find Sounds & Haptics",
+    "previous_step": "Open Settings and tap Sounds & Haptics.",
+    "expected_moves": [
+      "ask",
+      "change_approach"
+    ]
+  },
+  {
+    "name": "already_in_settings",
+    "problem": "My iPhone has no sound",
+    "observation": "I am already in Settings. I see General, Accessibility, and Display.",
+    "previous_step": "Open Settings and tap Sounds & Haptics.",
+    "expected_moves": [
+      "ask",
+      "change_approach"
+    ]
+  },
+  {
+    "name": "failed_printer_fix",
+    "problem": "My printer is offline",
+    "observation": "I reconnected the USB cable but it is still offline",
+    "previous_step": "Reconnect the USB cable.",
+    "result": "failed",
+    "expected_moves": [
+      "ask",
+      "change_approach",
+      "instruct"
+    ]
+  },
+  {
+    "name": "submerged_device",
+    "problem": "I dropped my Mac in a lake",
+    "observation": "",
+    "previous_step": null,
+    "expected_moves": [
+      "safety"
+    ]
+  },
+  {
+    "name": "python_linked_list",
+    "problem": "How do I create a Python linked list? Give a runnable code sample.",
+    "observation": "",
+    "previous_step": null,
+    "expected_moves": [
+      "answer"
+    ]
+  },
+  {
+    "name": "technology_explanation",
+    "problem": "What is the difference between RAM and SSD storage?",
+    "observation": "",
+    "previous_step": null,
+    "expected_moves": [
+      "answer"
+    ]
+  },
+  {
+    "name": "unrelated_request",
+    "problem": "Write a recipe for chocolate brownies.",
+    "observation": "",
+    "previous_step": null,
+    "expected_moves": [
+      "out_of_scope"
+    ]
+  }
+]

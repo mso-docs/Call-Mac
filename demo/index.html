@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Patient tech help, one step at a time. Try Call Mac with your own Ollama or explore a fictional sample.">
+  <meta name="referrer" content="no-referrer">
+  <title>Call Mac · Browser demo</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-icon" aria-hidden="true">↗</span> Call Mac <span class="badge">Browser demo</span></a>
+    <a href="https://github.com/mso-docs/Call-Mac" target="_blank" rel="noopener noreferrer">Source code ↗</a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" aria-label="Connection and preferences">
+      <details id="workspace" class="workspace" open>
+      <summary class="workspace-toggle">Ollama & demo settings</summary>
+      <h2>Your workspace</h2>
+      <p class="muted">Your AI. Your computer. Your pace.</p>
+      <form id="connection-form">
+        <label for="endpoint">Ollama address</label>
+        <input id="endpoint" type="url" value="http://localhost:11434" required autocomplete="off" spellcheck="false">
+        <p class="hint">Use localhost when Ollama runs on this computer. Another address sends your conversation to that server.</p>
+        <button id="connect" type="submit">Connect to Ollama</button>
+      </form>
+      <label for="model">Gemma model</label>
+      <select id="model" disabled><option value="">Connect to find models</option></select>
+      <label for="experience">Experience with tech</label>
+      <select id="experience"><option>Beginner</option><option>Comfortable</option><option>Technical</option></select>
+      <div id="connection-status" class="status" role="status">Ollama is not connected.</div>
+      <hr>
+      <button id="sample" class="secondary">Try a sample walkthrough</button>
+      <p class="hint">A fictional printer problem with scripted replies. No Ollama or downloads needed.</p>
+      <details id="setup">
+        <summary>Connect your Ollama</summary>
+        <ol>
+          <li>Install <a href="https://ollama.com/download" target="_blank" rel="noopener noreferrer">Ollama</a> on this computer.</li>
+          <li>Download a model: <code>ollama pull gemma3:4b</code></li>
+          <li>Allow this site's origin in Ollama, then restart it:</li>
+        </ol>
+        <pre id="origin-command"></pre>
+        <button id="copy-origin" class="secondary" type="button">Copy origin</button>
+        <p class="hint">The command above is for a terminal, after stopping an existing Ollama process. For the desktop app or a Linux service, follow the <a href="https://docs.ollama.com/faq#how-do-i-configure-ollama-server" target="_blank" rel="noopener noreferrer">OS-specific instructions</a>. Set OLLAMA_ORIGINS to <code id="site-origin"></code>. Use this exact origin, rather than *.</p>
+        <p class="hint">If your browser asks to access local devices, allow it for this site. If access is blocked, check site permissions or try a current desktop Chrome/Edge browser. You can also run this demo locally.</p>
+        <p class="hint">Ollama can stay on localhost. You do not need to open ports or expose it to the internet.</p>
+      </details>
+      <details>
+        <summary>Where does my information go?</summary>
+        <p class="hint">Your browser sends the problem, feedback, and selected experience directly to the Ollama address you choose. This site has no AI proxy, accounts, analytics, or shared database. The hosting provider still serves the page and may record ordinary access logs.</p>
+        <p class="hint">Conversation and connection settings stay in this tab's memory. Reloading clears them. Nothing is saved to local storage. Avoid entering passwords or other secrets. AI advice can be wrong; review it before acting.</p>
+      </details>
+      </details>
+    </aside>
+    <main>
+      <div class="conversation-heading"><span id="mode-label" class="eyebrow">BRING YOUR OWN OLLAMA</span><button id="new-task" class="secondary">New help task</button></div>
+      <section id="welcome">
+        <h1>Hi there!<br>What can I help with?</h1>
+        <p class="subtitle">Clear answers to tech questions.<br>One step at a time.</p>
+        <div class="welcome-actions"><button id="sample-start" class="secondary">Try without Ollama</button><a id="setup-link" href="#connection-form">Connect your Ollama ↗</a></div>
+        <div class="examples">
+          <button class="example" data-problem="My printer is on, but shows as offline."><strong>Devices</strong><span>My printer shows as offline.</span></button>
+          <button class="example" data-problem="I'm connected to Wi-Fi, but websites won't load."><strong>Apps & Wi-Fi</strong><span>I'm connected, but nothing loads.</span></button>
+          <button class="example" data-problem="Show me a simple Python function and explain how it works."><strong>Code & concepts</strong><span>Explain a Python function.</span></button>
+        </div>
+      </section>
+      <div id="sample-notice" class="notice" hidden>Sample mode · Fictional printer scenario, scripted replies. Your text does not go to an AI.</div>
+      <section id="conversation" aria-label="Conversation" aria-live="polite"></section>
+      <div id="error" class="error" role="alert" hidden></div>
+      <div id="working" class="working" role="status" hidden>Waiting for your Ollama… <button id="cancel" class="secondary" type="button">Stop</button></div>
+      <button id="retry" class="secondary" hidden>Retry response</button>
+      <form id="problem-form" class="composer">
+        <label for="problem">Describe a problem or ask a tech question</label>
+        <textarea id="problem" rows="3" maxlength="4000" required placeholder="What's happening, and what do you see?"></textarea>
+        <button id="send" type="submit">Ask Call Mac ↗</button>
+      </form>
+      <form id="feedback-form" class="feedback" hidden>
+        <label id="observation-label" for="observation">What happened? (optional)</label>
+        <textarea id="observation" rows="3" maxlength="2000" placeholder="Tell me what changed or what you see…"></textarea>
+        <div id="action-buttons" class="button-row"><button type="button" data-feedback="fixed">Fixed it</button><button type="button" data-feedback="failed" class="secondary">Still broken</button><button type="button" data-feedback="unclear" class="secondary">I don't understand</button></div>
+        <button id="reply" type="submit" hidden>Send reply ↗</button>
+      </form>
+      <p class="footer-note"><a href="https://youtu.be/4DAJSamZxpw" target="_blank" rel="noopener noreferrer">Watch the video demo on YouTube ↗</a><br>A browser demo of Call Mac. For saved profiles and remembered fixes, run the local Python app.</p>
+      <noscript>This demo needs JavaScript to connect to Ollama and show the sample walkthrough.</noscript>
+    </main>
+  </div>
+</body>
+</html>
